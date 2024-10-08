@@ -11,6 +11,7 @@
 setwd('C:/Users/phdma/OneDrive/OneDrive - University of Glasgow/Documents/Parsons_Postdoc/')
 
 library(tidyverse)
+library(lubridate)
 
 smass = read_csv('SMASS master detail 1992 - 08102024.csv')
 
@@ -145,16 +146,18 @@ smass %>%
 smass %>% 
   select(class_field, 
          subclass, 
-         datefound) %>% 
-  separate(col = datefound,
-           into = c('day',
-                    'month',
-                    'year'),
-           sep = '/', 
-           remove = F) %>% 
-  mutate(day = as.numeric(day), 
-         month = as.numeric(month), 
-         year = as.numeric(year)) %>% 
-    mutate(Date = make_date(day, 
-                          month, 
-                          year))
+         datefound) 
+# %>% 
+#   separate(col = datefound,
+#            into = c('day',
+#                     'month',
+#                     'year'),
+#            sep = '/', 
+#            remove = F)  
+ 
+   # mutate(day = as.numeric(day), 
+   #       month = as.numeric(month), 
+   #       year = as.numeric(year)) %>% 
+   #  mutate(Date = make_date(day, 
+   #                        month, 
+   #                        year))
