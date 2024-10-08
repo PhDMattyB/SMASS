@@ -105,4 +105,36 @@ ggsave('Smass_plot1.tiff',
 
 # smass plot2 -------------------------------------------------------------
 
+plot2_pal = c('#d00000', 
+              '#3f88c5', 
+              '#ffba08', 
+              '#136f63')
 
+smass$class_field = factor(smass$class_field, 
+                           levels = c('Cetacean', 
+                                      'Pinniped', 
+                                      'Shark',
+                                      'Marine Turtle'))
+
+smass %>% 
+  separate(col = datefound, 
+           into = c('day', 
+                    'month',
+                    'year'), 
+           sep = '/') %>%
+  select(class_field,
+         subclass, 
+         year) %>% 
+  ggplot(aes(x = year, 
+             fill = class_field))+
+  geom_bar()+
+  scale_fill_manual(values = plot2_pal)+
+  labs(y = 'Number of strandings')+
+  geom_hline(yintercept = 703)+
+  theme(panel.grid = element_blank(),
+        axis.text.x = element_text(size = 12, 
+                                   angle = 90),
+       axis.title.y = element_text(size = 14), 
+       axis.text.y = element_text(size = 12), 
+       axis.title.x = element_blank(), 
+       legend.title = element_blank())
