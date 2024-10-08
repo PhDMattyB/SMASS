@@ -142,4 +142,19 @@ smass %>%
 
 # smass plot 3 ------------------------------------------------------------
 
-
+smass %>% 
+  select(class_field, 
+         subclass, 
+         datefound) %>% 
+  separate(col = datefound,
+           into = c('day',
+                    'month',
+                    'year'),
+           sep = '/', 
+           remove = F) %>% 
+  mutate(day = as.numeric(day), 
+         month = as.numeric(month), 
+         year = as.numeric(year)) %>% 
+    mutate(Date = make_date(day, 
+                          month, 
+                          year))
