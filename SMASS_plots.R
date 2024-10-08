@@ -138,3 +138,8 @@ smass %>%
        axis.text.y = element_text(size = 12), 
        axis.title.x = element_blank(), 
        legend.title = element_blank())
+
+
+# smass plot 3 ------------------------------------------------------------
+
+
