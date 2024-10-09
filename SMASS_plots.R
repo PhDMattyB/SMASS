@@ -146,7 +146,9 @@ smass %>%
 smass %>% 
   select(class_field, 
          subclass, 
-         datefound) 
+         datefound) %>% 
+  # mutate(datefound = as.numeric(datefound)) %>% 
+  as_date(datefound)
 # %>% 
 #   separate(col = datefound,
 #            into = c('day',
