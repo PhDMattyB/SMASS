@@ -146,17 +146,23 @@ smass %>%
 smass %>% 
   select(class_field, 
          subclass, 
-         datefound) %>% 
+         datefound) %>%
+  group_by(datefound) %>% 
+  summarize(n = n())%>%
+  separate(col = datefound,
+           into = c('day',
+                    'month',
+                    'year'),
+           sep = '/',
+           remove = F) %>% 
+  arrange(datefound)
+
+  # rowid_to_column() %>% 
+  mutate(cum_sum = cumsum(rowid))
   # mutate(datefound = as.numeric(datefound)) %>% 
   as_date(datefound)
-# %>% 
-#   separate(col = datefound,
-#            into = c('day',
-#                     'month',
-#                     'year'),
-#            sep = '/', 
-#            remove = F)  
- 
+
+
    # mutate(day = as.numeric(day), 
    #       month = as.numeric(month), 
    #       year = as.numeric(year)) %>% 
