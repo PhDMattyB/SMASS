@@ -220,3 +220,33 @@ ggplot(data = cum_data,
   # geom_line(aes(col = year))
 
 
+
+# Scottish map ------------------------------------------------------------
+
+library(maps)
+
+scot = map_data('world') %>% 
+  as_tibble() %>% 
+  # group_by(region) %>% 
+  # select(region) %>% 
+  # distinct() %>% View()
+  filter(region == 'UK') 
+# %>% 
+#   # select(subregion) %>% 
+#   # distinct()
+#   filter(subregion == 'Scotland')
+
+ggplot(data = scot) +
+  geom_map(data = scot, 
+           map = scot, 
+           aes(x = long, 
+               y = lat, 
+               map_id = region), 
+           col = 'black',
+           size = 0.5,
+           fill = 'white')+
+  theme(panel.grid = element_blank(), 
+        axis.title = element_blank(), 
+        axis.text = element_blank())
+
+
