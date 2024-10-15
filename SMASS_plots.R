@@ -158,6 +158,9 @@ cum_data = smass %>%
   arrange(year, 
           month,
           day) %>%
+  unite(col = 'day_month',
+        day:month,
+        sep = '_') %>% 
   group_by(year) %>% 
   mutate(cum_sum = cumsum(n)) %>% 
   filter(year %in% c('2018', 
@@ -167,14 +170,12 @@ cum_data = smass %>%
                      '2022', 
                      '2023')) 
   
-cum_data$datefound2 = factor(cum_data$datefound, 
-                             levels = unique(cum_data$datefound)) 
+cum_data$day_month = factor(cum_data$day_month, 
+                             levels = unique(cum_data$day_month)) 
   
 ggplot(data = cum_data, 
-       aes(x = datefound2, 
+       aes(x = day_month, 
            y = cum_sum, 
            group = year))+
-  geom_point(aes(col = year))
-  # geom_line(aes(x = year, 
-  #               y = cum_sum, 
-  #               group = year))
+  # geom_point(aes(col = year))
+  geom_line(aes(col = year))
