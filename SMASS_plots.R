@@ -169,13 +169,19 @@ cum_data = smass %>%
                      '2021', 
                      '2022', 
                      '2023')) 
+# %>% 
+#   factor(day_month, 
+#          levels = unique(day_month))
   
 cum_data$day_month = factor(cum_data$day_month, 
                              levels = unique(cum_data$day_month)) 
   
 ggplot(data = cum_data, 
        aes(x = day_month, 
-           y = cum_sum, 
-           group = year))+
-  # geom_point(aes(col = year))
-  geom_line(aes(col = year))
+           y = cum_sum))+
+  geom_point(aes(col = year))+
+  theme(axis.text.x = element_text(size = 5, 
+                                   angle = 90))
+  # geom_line(aes(col = year))
+
+
