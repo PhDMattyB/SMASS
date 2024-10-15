@@ -155,17 +155,21 @@ smass %>%
                     'year'),
            sep = '/',
            remove = F) %>% 
-  arrange(datefound)
-
-  # rowid_to_column() %>% 
-  mutate(cum_sum = cumsum(rowid))
-  # mutate(datefound = as.numeric(datefound)) %>% 
-  as_date(datefound)
-
-
-   # mutate(day = as.numeric(day), 
-   #       month = as.numeric(month), 
-   #       year = as.numeric(year)) %>% 
-   #  mutate(Date = make_date(day, 
-   #                        month, 
-   #                        year))
+  arrange(year, 
+          month,
+          day) %>%
+  group_by(year) %>% 
+  mutate(cum_sum = cumsum(n)) %>% 
+  filter(year %in% c('2018', 
+                     '2019', 
+                     '2020', 
+                     '2021', 
+                     '2022', 
+                     '2023')) %>% 
+  ggplot()+
+  geom_smooth(aes(x = datefound, 
+                  y = cum_sum, 
+                  group = year))
+  # geom_line(aes(x = year, 
+  #               y = cum_sum, 
+  #               group = year))
