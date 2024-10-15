@@ -178,11 +178,18 @@ cum_data$day_month = factor(cum_data$day_month,
 
 cum_data$datefound2 = as.Date.factor(cum_data$datefound, 
                                          format = "%d/%m/%y") 
+cum_pal = c('#f94144', 
+            '#f8961e', 
+            '#f9c74f', 
+            '#90be6d', 
+            '#43aa8b', 
+            '#277da1')
 
 ggplot(data = cum_data, 
        aes(x = datefound2, 
            y = cum_sum))+
-  geom_point(aes(col = year))+
+  geom_point(aes(col = year), 
+             alpha = 0.2)+
   scale_x_date(date_breaks = '1 month', 
                date_minor_breaks = '1 day', 
                date_labels = '%B')+
@@ -198,12 +205,15 @@ ggplot(data = cum_data,
                                 900, 
                                 1000))+
   labs(y = 'Cumulative number of strandings')+
+  scale_color_manual(values = cum_pal)+
   theme(axis.text.x = element_text(size = 12, 
                                    angle = 90),
         axis.title.x = element_blank(),
         axis.text.y = element_text(size = 12),
         axis.title.y = element_text(size = 14),
-        panel.grid = element_blank())
+        panel.grid = element_blank(), 
+        legend.title = element_blank(), 
+        legend.position = c())
   # geom_line(aes(col = year))
 
 
