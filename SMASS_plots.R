@@ -143,7 +143,7 @@ smass %>%
 
 # smass plot 3 ------------------------------------------------------------
 
-smass %>% 
+cum_data = smass %>% 
   select(class_field, 
          subclass, 
          datefound) %>%
@@ -165,11 +165,16 @@ smass %>%
                      '2020', 
                      '2021', 
                      '2022', 
-                     '2023')) %>% 
-  ggplot()+
-  geom_smooth(aes(x = datefound, 
-                  y = cum_sum, 
-                  group = year))
+                     '2023')) 
+  
+cum_data$datefound2 = factor(cum_data$datefound, 
+                             levels = unique(cum_data$datefound)) 
+  
+ggplot(data = cum_data, 
+       aes(x = datefound2, 
+           y = cum_sum, 
+           group = year))+
+  geom_point(aes(col = year))
   # geom_line(aes(x = year, 
   #               y = cum_sum, 
   #               group = year))
