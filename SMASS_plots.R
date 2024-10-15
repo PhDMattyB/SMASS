@@ -297,7 +297,9 @@ smass$class_field = factor(smass$class_field,
                     'year'), 
            sep = '/') %>% 
   # filter(year == 2022) %>%
-   filter(year %in% c(1992, 
+   filter(year %in% c(1992,
+                      2002,
+                      2012,
                       2022)) %>% 
   group_by(class_field, 
            subclass) %>% 
@@ -309,8 +311,7 @@ smass$class_field = factor(smass$class_field,
   labs(y = 'Number of strandings')+
   facet_grid(~class_field, 
              scales = 'free')+
-  facet_grid(~year, 
-             scales = 'free')+
+  facet_wrap(~year)+
   theme(panel.grid.major.x = element_blank(), 
         axis.title.x = element_blank(), 
         # axis.text.x = element_text(size = 10, 
