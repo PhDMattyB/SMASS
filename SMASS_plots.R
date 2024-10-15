@@ -269,6 +269,18 @@ plot1_pal = c('#184e77',
               '#f72585')
 
 
+smass %>% 
+  separate(col = datefound, 
+           into = c('day', 
+                    'month',
+                    'year'), 
+           sep = '/') %>% 
+  filter(year == 2022) %>% 
+  group_by(subclass, 
+           year) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n))
+
 
 smass$subclass = factor(smass$subclass, 
                         levels = c('Harbour porpoise', 
