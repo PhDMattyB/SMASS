@@ -311,7 +311,7 @@ smass$class_field = factor(smass$class_field,
   labs(y = 'Number of strandings')+
   facet_grid(~class_field, 
              scales = 'free')+
-  facet_wrap(~year)+
+  facet_grid(~year)+
   theme(panel.grid.major.x = element_blank(), 
         axis.title.x = element_blank(), 
         # axis.text.x = element_text(size = 10, 
