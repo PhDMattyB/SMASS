@@ -192,7 +192,10 @@ ggplot(data = cum_data,
              alpha = 0.2)+
   scale_x_date(date_breaks = '1 month', 
                date_minor_breaks = '1 day', 
-               date_labels = '%B')+
+               date_labels = '%B',
+               expand = c(0,0),
+               limits = c(as.Date("2020-01-01"), 
+                          as.Date("2020-12-31")))+
   scale_y_continuous(limits = c(0,1000), 
                      breaks = c(100, 
                                 200, 
