@@ -160,7 +160,7 @@ cum_data = smass %>%
           day) %>%
   unite(col = 'day_month',
         day:month,
-        sep = '_') %>% 
+        sep = '-') %>% 
   group_by(year) %>% 
   mutate(cum_sum = cumsum(n)) %>% 
   filter(year %in% c('2018', 
@@ -175,13 +175,35 @@ cum_data = smass %>%
   
 cum_data$day_month = factor(cum_data$day_month, 
                              levels = unique(cum_data$day_month)) 
-  
+
+cum_data$datefound2 = as.Date.factor(cum_data$datefound, 
+                                         format = "%d/%m/%y") 
+
 ggplot(data = cum_data, 
-       aes(x = day_month, 
+       aes(x = datefound2, 
            y = cum_sum))+
   geom_point(aes(col = year))+
-  theme(axis.text.x = element_text(size = 5, 
-                                   angle = 90))
+  scale_x_date(date_breaks = '1 month', 
+               date_minor_breaks = '1 day', 
+               date_labels = '%B')+
+  scale_y_continuous(limits = c(0,1000), 
+                     breaks = c(100, 
+                                200, 
+                                300, 
+                                400, 
+                                500, 
+                                600, 
+                                700, 
+                                800, 
+                                900, 
+                                1000))+
+  labs(y = 'Cumulative number of strandings')+
+  theme(axis.text.x = element_text(size = 12, 
+                                   angle = 90),
+        axis.title.x = element_blank(),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 14),
+        panel.grid = element_blank())
   # geom_line(aes(col = year))
 
 
