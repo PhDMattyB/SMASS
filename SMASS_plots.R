@@ -346,3 +346,92 @@ ggsave('Smass_plot1.tiff',
        height = 15)
 
 
+
+# Stranding over time -----------------------------------------------------
+
+smass %>% 
+  select(subclass) %>% 
+  distinct()
+
+cum_harb_porp_data = smass %>% 
+  select(class_field, 
+         subclass, 
+         datefound) %>%
+  group_by(subclass, 
+           datefound) %>%
+  filter(subclass == 'Harbour porpoise') %>% 
+  summarize(n = n())%>%
+  separate(col = datefound,
+           into = c('day',
+                    'month',
+                    'year'),
+           sep = '/',
+           remove = F) %>% 
+  arrange(year, 
+          month,
+          day) %>%
+  unite(col = 'day_month',
+        day:month,
+        sep = '-') %>% 
+  group_by(year) %>%
+  mutate(cum_sum = cumsum(n))%>%
+  filter(year %in% c('2018',
+                     '2019',
+                     '2020',
+                     '2021',
+                     '2022',
+                     '2023')) 
+# %>% 
+#   factor(day_month, 
+#          levels = unique(day_month))
+
+# cum_data$day_month = factor(cum_data$day_month, 
+#                             levels = unique(cum_data$day_month)) 
+
+cum_harb_porp_data$datefound2 = as.Date.factor(cum_harb_porp_data$datefound, 
+                                     format = "%d/%m/%y") 
+cum_pal = c('#f94144', 
+            '#f8961e', 
+            '#f9c74f', 
+            '#90be6d', 
+            '#43aa8b', 
+            '#277da1')
+
+
+ggplot(data = cum_harb_porp_data, 
+       aes(x = datefound2, 
+           y = cum_sum))+
+  geom_point(alpha = 0.2, 
+             aes(col = year))+
+  scale_x_date(date_breaks = '1 month', 
+               date_minor_breaks = '1 day', 
+               date_labels = '%B',
+               expand = c(0,0),
+               limits = c(as.Date("2020-01-01"), 
+                          as.Date("2020-12-31")))+
+  scale_y_continuous(limits = c(0,300), 
+                     breaks = c(100, 
+                                200, 
+                                300, 
+                                400, 
+                                500, 
+                                600, 
+                                700, 
+                                800, 
+                                900, 
+                                1000))+
+  labs(y = 'Cumulative number of strandings')+
+  scale_color_manual(values = cum_pal)+
+  theme(axis.text.x = element_text(size = 12, 
+                                   angle = 90),
+        axis.title.x = element_blank(),
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 14),
+        panel.grid = element_blank(), 
+        legend.title = element_blank(), 
+        legend.position = c())
+# geom_line(aes(col = year))
+
+
+
+
